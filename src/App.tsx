@@ -1,10 +1,13 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StatusBar } from "react-native";
 
 const App: React.FC = () => (
-  <View>
-    <Text>Olá</Text>
-  </View>
+  <>
+    <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+    <View>
+      <Text>Olá</Text>
+    </View>
+  </>
 );
 
 export default App;
