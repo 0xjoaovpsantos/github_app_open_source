@@ -6,14 +6,19 @@ import { Login_URL } from "../utils/urls";
 
 interface AuthContextData {
   signIn(email: string, password: string): Promise<void>;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const [loading, setLoading] = useState(false);
+
   const signIn = useCallback(async (email: string, password: string) => {
+    setLoading(true);
+
     const code_access = encode(`${email}:${password}`);
-    console.log("chegou");
+
     try {
       const response = await fetch(`${Login_URL}/user`, {
         method: "GET",
@@ -23,14 +28,17 @@ export const AuthProvider: React.FC = ({ children }) => {
           Authorization: `Basic ${code_access}`,
         },
       });
-      console.log(response);
     } catch (err) {
       console.log(err);
     }
+
+    setLoading(false);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ signIn }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ signIn, loading }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

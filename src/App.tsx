@@ -5,13 +5,13 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import AppProvider from "./hooks/";
 
-import AuthRoutes from "./routes/auth.routes";
+import Routes from "./routes";
 
 const App: React.FC = () => (
   <NavigationContainer>
     <StatusBar barStyle="dark-content" backgroundColor="#fff" />
     <AppProvider>
-      <AuthRoutes />
+      <Routes />
     </AppProvider>
   </NavigationContainer>
 );
