@@ -8,6 +8,8 @@ import React, {
 
 import { encode } from "base-64";
 
+import axios from "axios";
+
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { Login_URL } from "../utils/urls";
@@ -46,8 +48,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     const code_access = encode(`${email}:${password}`);
 
     try {
-      const response = await fetch(`${Login_URL}/user`, {
-        method: "GET",
+      const instance = axios.create({
         headers: {
           Accept: "application/json",
           "Content-type": "application/json",
@@ -55,6 +56,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         },
       });
 
+      const response = await instance.get(`${Login_URL}/user`);
       if (response.status === 200) {
         await AsyncStorage.setItem("code_access", code_access);
         setCodeAccess(code_access);
