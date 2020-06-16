@@ -34,7 +34,6 @@ const Commits: React.FC = ({ route }) => {
   const [commits, setCommits] = useState([]);
 
   const { codeAccess } = useAuth();
-  //joaovictorpsantos/agenda-lp3-backend/commits
 
   const { name, user } = route.params;
 
@@ -83,6 +82,7 @@ const Commits: React.FC = ({ route }) => {
         </ContainerRepositoryName>
         <FlatList
           data={commits}
+          style={{ marginBottom: 80 }}
           keyExtractor={(commit) => commit.node_id}
           renderItem={({ item }) => (
             <>

@@ -127,9 +127,6 @@ const Dashboard: React.FC = () => {
           )}
         ></FlatList>
       )}
-      <TouchableHighlight onPress={() => signOut()} style={{ marginTop: 20 }}>
-        <Text>Logout</Text>
-      </TouchableHighlight>
     </View>
   );
 };
