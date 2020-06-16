@@ -5,7 +5,16 @@ import { ReposUser_URL } from "../../utils/urls";
 
 import axios from "axios";
 
+import {
+  ContainerRepository,
+  RepositoryName,
+  ContainerRepositoryDescription,
+  RepositoryDescription,
+  Underline,
+} from "./styles";
+
 import { useAuth } from "../../hooks/auth";
+import { FlatList } from "react-native-gesture-handler";
 
 interface ReposProps {
   id: number;
@@ -15,7 +24,7 @@ interface ReposProps {
 
 const Dashboard: React.FC = () => {
   const { signOut, codeAccess } = useAuth();
-  const [repo, setRepos] = useState<ReposProps[]>([]);
+  const [repos, setRepos] = useState<ReposProps[]>([]);
 
   const getRepos = useCallback(async () => {
     try {
@@ -42,11 +51,25 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "blue" }}>
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <Text>DASHBOARD</Text>
-      <Button title="deslogar" onPress={() => signOut()}>
-        <Text>Deslogar</Text>
-      </Button>
+      <FlatList
+        data={repos}
+        keyExtractor={(repository) => repository.id.toString()}
+        renderItem={({ item: repository }) => (
+          <ContainerRepository>
+            <RepositoryName>{repository.name}</RepositoryName>
+            <ContainerRepositoryDescription>
+              <RepositoryDescription>
+                {repository.description != null
+                  ? repository.description
+                  : "Not have description"}
+              </RepositoryDescription>
+            </ContainerRepositoryDescription>
+            <Underline />
+          </ContainerRepository>
+        )}
+      ></FlatList>
     </View>
   );
 };
