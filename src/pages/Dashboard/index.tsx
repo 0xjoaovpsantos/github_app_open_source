@@ -3,6 +3,8 @@ import { View, Text, Button, Image } from "react-native";
 
 import { ReposUser_URL } from "../../utils/urls";
 
+import { useNavigation } from "@react-navigation/native";
+
 import githubLogoImg from "../../assets/github_logo.png";
 
 import axios from "axios";
@@ -23,6 +25,7 @@ import { FlatList } from "react-native-gesture-handler";
 interface ReposProps {
   id: number;
   name: string;
+  owner: object;
   description: string | null;
 }
 
@@ -30,6 +33,8 @@ const Dashboard: React.FC = () => {
   const { signOut, codeAccess } = useAuth();
   const [allRepos, setAllRepos] = useState<ReposProps[]>([]);
   const [searchRepos, setSearchRepos] = useState<ReposProps[]>();
+
+  const navigation = useNavigation();
 
   const getRepos = useCallback(async () => {
     try {
@@ -86,7 +91,15 @@ const Dashboard: React.FC = () => {
         data={searchRepos}
         keyExtractor={(repository) => repository.id.toString()}
         renderItem={({ item: repository }) => (
-          <ContainerRepository>
+          <ContainerRepository
+            onStartShouldSetResponder={() => {
+              navigation.navigate("Commits", {
+                name: repository.name,
+                user: repository.owner.login,
+              });
+              return true;
+            }}
+          >
             <RepositoryName>{repository.name}</RepositoryName>
             <ContainerRepositoryDescription>
               <RepositoryDescription>
