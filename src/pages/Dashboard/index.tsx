@@ -20,7 +20,7 @@ import {
 } from "./styles";
 
 import { useAuth } from "../../hooks/auth";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 
 interface ReposProps {
   id: number;
@@ -88,6 +88,7 @@ const Dashboard: React.FC = () => {
         ></SearchInput>
       </ContainerSearchInput>
       <FlatList
+        style={{ flex: 1 }}
         data={searchRepos}
         keyExtractor={(repository) => repository.id.toString()}
         renderItem={({ item: repository }) => (
@@ -112,6 +113,9 @@ const Dashboard: React.FC = () => {
           </ContainerRepository>
         )}
       ></FlatList>
+      <TouchableHighlight onPress={() => signOut()} style={{ marginTop: 20 }}>
+        <Text>Logout</Text>
+      </TouchableHighlight>
     </View>
   );
 };

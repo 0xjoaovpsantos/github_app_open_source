@@ -25,7 +25,7 @@ const SignIn: React.FC = () => {
 
   return (
     <Container>
-      <Icon name="github" size={160} color="#fff" />
+      <Icon name="github" size={160} color="#000" />
 
       <View style={{ width: "100%", display: viewDisplay ? "flex" : "none" }}>
         <Input
