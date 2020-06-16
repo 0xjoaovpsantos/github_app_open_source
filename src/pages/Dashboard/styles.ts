@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 
 export const ContainerSearchInput = styled.View`
-  width: 100%;
+  margin: 0px 20px;
   height: 60px;
   background-color: #fff;
   border-color: #c2c5c6;
