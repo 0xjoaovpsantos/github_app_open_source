@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 
 import axios from "axios";
 
@@ -7,11 +7,21 @@ import { useAuth } from "../../hooks/auth";
 
 import { Commits_URL } from "../../utils/urls";
 
+import githubLogoImg from "../../assets/github_logo.png";
+
 import { useNavigation } from "@react-navigation/native";
 
 import { FlatList } from "react-native-gesture-handler";
 
-import { NameRepository, ContainerCommit, CommitMessage } from "./styles";
+import {
+  Container,
+  ContainerRepositoryName,
+  RepositoryName,
+  ContainerMessage,
+  CommitMessage,
+  ContainerCommit,
+  Underline,
+} from "./styles";
 
 interface CommitsProps {
   commit: string;
@@ -56,16 +66,40 @@ const Commits: React.FC = ({ route }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <Text>{name}</Text>
-      <FlatList
-        data={commits}
-        keyExtractor={(commit) => commit.node_id}
-        renderItem={({ item }) => (
-          <ContainerCommit>
-            <CommitMessage>{item.commit.message}</CommitMessage>
-          </ContainerCommit>
-        )}
-      ></FlatList>
+      <Container>
+        <View style={{ alignItems: "center" }}>
+          <Image
+            source={githubLogoImg}
+            style={{
+              height: 80,
+              width: 300,
+
+              resizeMode: "contain",
+            }}
+          />
+        </View>
+        <ContainerRepositoryName>
+          <RepositoryName>{`${name} (${commits.length} commits)`}</RepositoryName>
+        </ContainerRepositoryName>
+        <FlatList
+          data={commits}
+          keyExtractor={(commit) => commit.node_id}
+          renderItem={({ item }) => (
+            <>
+              <ContainerCommit>
+                <Image
+                  source={{ uri: item.committer.avatar_url }}
+                  style={{ width: 50, height: 50 }}
+                />
+                <ContainerMessage>
+                  <CommitMessage>{item.commit.message}</CommitMessage>
+                </ContainerMessage>
+              </ContainerCommit>
+              <Underline />
+            </>
+          )}
+        ></FlatList>
+      </Container>
     </View>
   );
 };
