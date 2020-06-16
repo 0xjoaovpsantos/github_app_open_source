@@ -18,7 +18,7 @@ export const SearchInput = styled.TextInput`
   font-size: 16px;
 `;
 
-export const ContainerRepository = styled.View`
+export const ContainerRepository = styled.TouchableOpacity`
   margin: 0px 20px;
 `;
 

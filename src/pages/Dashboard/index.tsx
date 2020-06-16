@@ -106,7 +106,7 @@ const Dashboard: React.FC = () => {
           keyExtractor={(repository) => repository.id.toString()}
           renderItem={({ item: repository }) => (
             <ContainerRepository
-              onStartShouldSetResponder={() => {
+              onPress={() => {
                 navigation.navigate("Commits", {
                   name: repository.name,
                   user: repository.owner.login,
