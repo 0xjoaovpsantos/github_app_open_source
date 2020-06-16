@@ -1,5 +1,9 @@
 import styled from "styled-components/native";
 
+export const EmailText = styled.Text`
+  margin: 20px auto;
+`;
+
 export const Container = styled.View`
   flex: 1;
   background-color: #fff;

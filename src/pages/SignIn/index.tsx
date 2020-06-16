@@ -8,9 +8,7 @@ import Button from "../../components/Button";
 
 import { useAuth } from "../../hooks/auth";
 
-import { ContainerEmail, ContainerPassword } from "./styles";
-
-import { Container } from "./styles";
+import { Container, EmailText } from "./styles";
 import { ScrollView } from "react-native-gesture-handler";
 
 import axios from "axios";
@@ -25,22 +23,28 @@ const SignIn: React.FC = () => {
 
   return (
     <Container>
-      <Icon name="github" size={160} color="#000" />
+      <Icon
+        name="github"
+        size={160}
+        color="#000"
+        style={{ marginBottom: 40 }}
+      />
 
       <View style={{ width: "100%", display: viewDisplay ? "flex" : "none" }}>
         <Input
           onChangeText={(text) => setEmail(text)}
           placeholder="E-mail"
-          placeholderTextColor="#000"
+          placeholderTextColor="#c1c5cc"
         />
         <Button onPress={() => setViewDisplay(false)}>Next</Button>
       </View>
 
       <View style={{ width: "100%", display: viewDisplay ? "none" : "flex" }}>
+        <EmailText>email</EmailText>
         <Input
           onChangeText={(text) => setPassword(text)}
           placeholder="Password"
-          placeholderTextColor="#000"
+          placeholderTextColor="#c1c5cc"
         />
         <Button onPress={() => signIn(email, password)}>Login</Button>
         <Button onPress={() => setViewDisplay(true)}>Back</Button>
