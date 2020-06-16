@@ -5,6 +5,8 @@ import { ReposUser_URL } from "../../utils/urls";
 
 import { useNavigation } from "@react-navigation/native";
 
+import Icon from "react-native-vector-icons/AntDesign";
+
 import githubLogoImg from "../../assets/github_logo.png";
 
 import axios from "axios";
@@ -85,6 +87,7 @@ const Dashboard: React.FC = () => {
         />
       </View>
       <ContainerSearchInput>
+        <Icon name="search1" size={20} />
         <SearchInput
           placeholder="Repository Search"
           onChangeText={(text) => updateListRepos(text)}

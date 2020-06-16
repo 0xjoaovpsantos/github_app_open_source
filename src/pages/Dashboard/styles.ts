@@ -1,16 +1,22 @@
 import styled from "styled-components/native";
 
 export const ContainerSearchInput = styled.View`
-  margin: 0px 20px;
+  margin: 20px 20px;
+  padding: 0 20px;
   height: 60px;
   background-color: #fff;
   border-color: #c2c5c6;
   border-style: solid;
   border-width: 2px;
   border-radius: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
-export const SearchInput = styled.TextInput``;
+export const SearchInput = styled.TextInput`
+  font-size: 16px;
+`;
 
 export const ContainerRepository = styled.View`
   margin: 0px 20px;
