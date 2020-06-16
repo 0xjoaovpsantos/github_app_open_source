@@ -1,8 +1,19 @@
 import styled from "styled-components/native";
 
+export const ContainerSearchInput = styled.View`
+  width: 100%;
+  height: 60px;
+  background-color: #fff;
+  border-color: #c2c5c6;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+`;
+
+export const SearchInput = styled.TextInput``;
+
 export const ContainerRepository = styled.View`
-  padding: 0px 10px;
-  margin: 0px 0px;
+  margin: 0px 20px;
 `;
 
 export const RepositoryName = styled.Text`
