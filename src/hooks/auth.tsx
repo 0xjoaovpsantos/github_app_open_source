@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useCallback, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useState,
+  useEffect,
+} from "react";
 
 import { encode } from "base-64";
 
@@ -6,20 +12,33 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 import { Login_URL } from "../utils/urls";
 
-interface AuthState {
-  code_access: string;
-}
-
 interface AuthContextData {
   signIn(email: string, password: string): Promise<void>;
   loading: boolean;
+  codeAccess: string;
+  signOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState<AuthState>({} as AuthState);
+  const [codeAccess, setCodeAccess] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function loadStorageData(): Promise<void> {
+      setLoading(true);
+      var code_access = await AsyncStorage.getItem("code_access");
+
+      if (!!code_access) {
+        setCodeAccess(code_access);
+      }
+
+      setLoading(false);
+    }
+
+    loadStorageData();
+  }, [codeAccess]);
 
   const signIn = useCallback(async (email: string, password: string) => {
     setLoading(true);
@@ -38,7 +57,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       if (response.status === 200) {
         await AsyncStorage.setItem("code_access", code_access);
-        setData({ code_access });
+        setCodeAccess(code_access);
       }
     } catch (err) {
       console.log(err);
@@ -47,8 +66,15 @@ export const AuthProvider: React.FC = ({ children }) => {
     setLoading(false);
   }, []);
 
+  const signOut = useCallback(async () => {
+    setLoading(true);
+    await AsyncStorage.removeItem("code_access");
+    setCodeAccess("");
+    setLoading(false);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ signIn, loading }}>
+    <AuthContext.Provider value={{ signIn, loading, codeAccess, signOut }}>
       {children}
     </AuthContext.Provider>
   );

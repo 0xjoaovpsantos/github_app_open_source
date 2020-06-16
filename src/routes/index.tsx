@@ -3,10 +3,12 @@ import { View, ActivityIndicator } from "react-native";
 
 import { useAuth } from "../hooks/auth";
 
+import AppRoutes from "./app.routes";
 import AuthRoutes from "./auth.routes";
+import { createNativeWrapper } from "react-native-gesture-handler";
 
 const Routes: React.FC = () => {
-  const { loading } = useAuth();
+  const { loading, codeAccess } = useAuth();
 
   if (loading) {
     return (
@@ -16,7 +18,7 @@ const Routes: React.FC = () => {
     );
   }
 
-  return <AuthRoutes />;
+  return codeAccess != "" ? <AppRoutes /> : <AuthRoutes />;
 };
 
 export default Routes;
