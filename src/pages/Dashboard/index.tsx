@@ -3,6 +3,8 @@ import { View, Text, Button } from "react-native";
 
 import { ReposUser_URL } from "../../utils/urls";
 
+import axios from "axios";
+
 import { useAuth } from "../../hooks/auth";
 
 interface ReposProps {
@@ -12,27 +14,32 @@ interface ReposProps {
 }
 
 const Dashboard: React.FC = () => {
-  const { signOut } = useAuth();
+  const { signOut, codeAccess } = useAuth();
   const [repo, setRepos] = useState<ReposProps[]>([]);
 
-  const { codeAccess } = useAuth();
-
   const getRepos = useCallback(async () => {
-    const response = await fetch(`${ReposUser_URL}/user/repos`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-type": "application/json",
-        Authorization: `Basic ${codeAccess}`,
-      },
-    });
+    try {
+      const instance = axios.create({
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+          Authorization: `Basic ${codeAccess}`,
+        },
+      });
 
-    console.log(response);
+      const response = await instance.get(`${ReposUser_URL}`);
+
+      if (response.status == 200) {
+        setRepos(response.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   useEffect(() => {
     getRepos();
-  });
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: "blue" }}>
