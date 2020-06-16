@@ -32,6 +32,9 @@ const SignIn: React.FC = () => {
 
       <View style={{ width: "100%", display: viewDisplay ? "flex" : "none" }}>
         <Input
+          autoCorrect={false}
+          autoCapitalize="none"
+          keyboardType="email-address"
           onChangeText={(text) => setEmail(text)}
           placeholder="E-mail"
           placeholderTextColor="#c1c5cc"
@@ -40,8 +43,15 @@ const SignIn: React.FC = () => {
       </View>
 
       <View style={{ width: "100%", display: viewDisplay ? "none" : "flex" }}>
-        <EmailText>email</EmailText>
+        <EmailText>{email}</EmailText>
         <Input
+          secureTextEntry
+          autoCorrect={false}
+          autoCapitalize="none"
+          returnKeyType="send"
+          onSubmitEditing={() => {
+            signIn(email, password);
+          }}
           onChangeText={(text) => setPassword(text)}
           placeholder="Password"
           placeholderTextColor="#c1c5cc"
